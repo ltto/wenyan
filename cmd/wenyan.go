@@ -32,7 +32,7 @@ func main() {
 }
 
 func pinyinPrint(pinyin string) {
-	dir, _ := os.UserCacheDir()
+	dir, _ := os.UserHomeDir()
 	file, err := ioutil.ReadFile(path.Join(dir, ".wenyan", "pcache", pinyin+".json"))
 	if err != nil {
 		notfound(pinyin)
@@ -61,7 +61,7 @@ in:
 	keyPrint(pinyins[i][1])
 }
 func keyPrint(key string) int {
-	dir, _ := os.UserCacheDir()
+	dir, _ := os.UserHomeDir()
 	key = string([]rune(key)[0])
 	file, err := ioutil.ReadFile(path.Join(dir, ".wenyan", "cache", key+".json"))
 	if err != nil {
