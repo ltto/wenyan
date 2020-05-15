@@ -14,21 +14,20 @@ import (
 )
 
 var key = "行"
-var pinyin = ""
 var url = false
 
 func main() {
-	flag.StringVar(&key, "k", "", "-k key:输入需要翻译文言文词语")
-	flag.StringVar(&pinyin, "p", "", "-p pinyin:输入需要翻译的文字拼音")
+	flag.StringVar(&key, "k", "", "-k key:输入需要翻译文言文词语 pinyin:输入需要翻译的文字拼音")
 	flag.BoolVar(&url, "u", false, "-u url:打开页面")
 	flag.Parse()
-	if key == "" && pinyin == "" {
+	if key == "" {
 		notfound(key)
 	}
 	if key != "" {
-		keyPrint(key)
-	} else if pinyin != "" {
-		pinyinPrint(pinyin)
+		i := keyPrint(key)
+		if i == 1 {
+			pinyinPrint(key)
+		}
 	}
 }
 
@@ -61,12 +60,12 @@ in:
 	}
 	keyPrint(pinyins[i][1])
 }
-func keyPrint(key string) {
+func keyPrint(key string) int {
 	dir, _ := os.UserCacheDir()
 	key = string([]rune(key)[0])
 	file, err := ioutil.ReadFile(path.Join(dir, ".wenyan", "cache", key+".json"))
 	if err != nil {
-		notfound(key)
+		return 1
 	}
 	m := WenYan{}
 	err = json.Unmarshal(file, &m)
@@ -74,6 +73,7 @@ func keyPrint(key string) {
 		panic(err)
 	}
 	fmt.Println(m)
+	return 0
 }
 func notfound(key string) {
 	fmt.Printf("没有找到与您查询的“%s”相关的结果。\n", key)
