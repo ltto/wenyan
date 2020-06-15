@@ -5,20 +5,19 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/morikuni/aec"
 	"io/ioutil"
 	"os"
 	"path"
 	"regexp"
 	"strconv"
+
+	"github.com/morikuni/aec"
 )
 
 var key = "行"
-var url = false
 
 func main() {
 	flag.StringVar(&key, "k", "", "-k key:输入需要翻译文言文词语 pinyin:输入需要翻译的文字拼音")
-	flag.BoolVar(&url, "u", false, "-u url:打开页面")
 	flag.Parse()
 	if key == "" {
 		notfound(key)
@@ -94,26 +93,15 @@ type WenYan struct {
 }
 
 func (w WenYan) String() string {
-	s := ""
-	if url {
-		s = fmt.Sprintf(`%s 拼音:%v 部首:%s 部首笔画:%s 总笔画:%s 笔顺:%s
+
+	s := fmt.Sprintf(`%s 拼音:%v 部首:%s 部首笔画:%s 总笔画:%s 笔顺:%s
 详细释义:
 %s
-与“%s”相关的词语:
-%v
-与“%s”相关的成语:
-%v
-链接:
-%s`, aec.Bold.Apply(w.Key), w.Pinyin, w.BuShou, w.BuShouBiHua, w.TotalBiHua, w.BiShun, w.Desc, w.Key, w.word, w.Key, w.CY, w.URL)
-	} else {
-		s = fmt.Sprintf(`%s 拼音:%v 部首:%s 部首笔画:%s 总笔画:%s 笔顺:%s
-详细释义:
-%s
+
 与“%s”相关的词语:
 %v
 与“%s”相关的成语:
 %v`, aec.Bold.Apply(w.Key), w.Pinyin, w.BuShou, w.BuShouBiHua, w.TotalBiHua, w.BiShun, w.Desc, w.Key, w.word, w.Key, w.CY)
-	}
 
 	reg, err := regexp.Compile(w.Key)
 	if err != nil {

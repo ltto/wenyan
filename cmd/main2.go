@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/tebeka/selenium"
-	"github.com/tebeka/selenium/chrome"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/tebeka/selenium"
+	"github.com/tebeka/selenium/chrome"
 )
 
 var (
