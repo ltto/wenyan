@@ -39,6 +39,7 @@ func main() {
 	for i := range urls {
 		cache1(urls[i])
 	}
+	cache2()
 }
 func cache1(url string) {
 	get, err := http.Get(url)
