@@ -101,5 +101,3 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 cmd/cache
 cmd/pcache
-/**/cache
-/**/pcache
